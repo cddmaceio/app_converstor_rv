@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RV • Ajustador de mapas</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script src="converter.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><span class="brand">RV <span>/ FERRAMENTAS</span></span><span class="privacy">Processamento local · Sem envio de dados</span></header>
+    <section class="intro"><p class="eyebrow">CONVERSOR DE ARQUIVOS</p><h1>Seus mapas, ajustados.</h1><p>Carregue o CSV, confira os ajustes de Recarga e Fator e baixe o resultado em TXT com a codificação desejada.</p></section>
+    <section class="panel" aria-labelledby="import-title">
+      <h2 id="import-title"><span class="step">01</span> Importar e processar</h2>
+      <label class="upload" for="file"><strong>Selecione seu arquivo CSV</strong><span>O arquivo original permanece no seu computador.</span><input type="file" id="file" accept=".csv,.txt,text/csv,text/plain"></label>
+      <div class="settings"><label>Codificação de entrada<select id="input-encoding"><option value="auto">Detectar automaticamente</option><option value="utf-8">UTF-8</option><option value="utf-16le">Unicode UTF-16 LE</option><option value="utf-16be">Unicode UTF-16 BE</option><option value="windows-1252">Windows-1252 (ANSI)</option></select></label><button id="process" disabled>Processar arquivo <span aria-hidden="true">→</span></button></div>
+      <p class="hint">Sem BOM, a detecção tenta UTF-8 e depois Windows-1252. Se os acentos aparecerem incorretos, selecione a codificação de entrada e processe novamente.</p>
+      <details><summary>Regras aplicadas</summary><ul><li>CargaAtual = Recarga: preenche Recarga com “Sim”. Nas demais cargas, mantém esse campo.</li><li>Uma matrícula de ajudante diferente de zero: Fator = 1.</li><li>Duas matrículas diferentes de zero: Fator = 2.</li><li>Ambas as matrículas zeradas ou vazias: Fator = 0.</li></ul><p>Zeros à esquerda são considerados: “00003” conta como ajudante; “00000” não conta.</p></details>
+    </section>
+    <p id="status" role="status" aria-live="polite">Selecione um arquivo para começar.</p>
+    <section id="result" hidden>
+      <div class="stats"><div><span>Registros processados</span><strong id="total">0</strong></div><div><span>Registros ajustados</span><strong id="changed">0</strong></div><div><span>Ajustes de Fator</span><strong id="factors">0</strong></div><div><span>Ajustes de Recarga</span><strong id="recharges">0</strong></div></div>
+      <section class="panel"><h2><span class="step">02</span> Conferir os mapas ajustados</h2><div class="table-toolbar"><p>Valores anteriores → valores novos</p><label class="search-label">Buscar mapa<input id="search" type="search" placeholder="Digite o número do mapa"></label></div><div class="table-wrap"><table><thead><tr><th>Registro</th><th>Mapa</th><th>Carga atual</th><th>Ajudante 1</th><th>Ajudante 2</th><th>Fator</th><th>Recarga</th></tr></thead><tbody id="changes"></tbody></table></div><p id="table-count" class="hint"></p></section>
+      <section class="panel"><h2><span class="step">03</span> Baixar arquivo ajustado</h2><div class="settings"><label>Codificação de saída<select id="output-encoding"><option value="original">Preservar codificação de entrada</option><option value="utf-8">UTF-8 sem BOM</option><option value="utf-8-bom">UTF-8 com BOM</option><option value="utf-16le">Unicode UTF-16 LE com BOM</option><option value="utf-16be">Unicode UTF-16 BE com BOM</option><option value="windows-1252">Windows-1252 (ANSI)</option></select></label><button id="download">Baixar TXT <span aria-hidden="true">↓</span></button></div><p class="hint">O TXT mantém as colunas, o separador, os espaços e as quebras de linha do CSV. Apenas Fator e Recarga são ajustados.</p></section>
+    </section>
+    <footer>RV · Ajustador de mapas <span>CSV → TXT</span></footer>
+  </main>
+</body>
+</html>

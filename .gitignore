@@ -1,0 +1,11 @@
+# Browser verification artifacts and local data files
+.playwright-mcp/
+*.csv
+*.txt
+
+# Local configuration and dependencies
+.env
+.env.*
+!.env.example
+node_modules/
+*.log
